@@ -1,18 +1,13 @@
 FROM debian:buster
 
-EXPOSE 3306
-
-ARG DB_NAME=DB_NAME
-ARG DB_USER=DB_USER
-ARG DB_PASSWORD=DB_PASSWORD
-ARG DB_ROOT_PASSWORD=DB_ROOT_PASSWORD
-
-RUN apt-get update && apt-get install \
-	mariadb-server -y && \
+RUN apt-get update -y && apt-get upgrade -y && apt-get  install -y \
+	mariadb-server  \
+	vim && \
 	rm -rf /var/lib/apt/lists/*
 
-# RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
-# COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d
+EXPOSE 3306
+RUN rm -f /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d
 
 # COPY tools/create_user.sh /
 # RUN bash ./create_user.sh
@@ -20,3 +15,9 @@ RUN apt-get update && apt-get install \
 # RUN rm -rf create_user.sh
 
 CMD ["mysqld_safe"]
+# CREATE DATABASE IF NOT EXISTS wordpress;
+# CREATE USER IF NOT EXISTS 'crendeha'@'%' IDENTIFIED BY '12345';
+# GRANT ALL PRIVILEGES ON wordpress.* TO 'crendeha'@'%';
+# FLUSH PRIVILEGES;
+# ALTER USER 'root'@'localhost' IDENTIFIED BY 'root12345';
+
