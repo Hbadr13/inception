@@ -9,15 +9,11 @@ EXPOSE 3306
 RUN rm -f /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d
 
-# COPY tools/create_user.sh /
-# RUN bash ./create_user.sh
-
-# RUN rm -rf create_user.sh
+RUN service mysql start
+RUN echo "CREATE DATABASE IF NOT EXISTS wordpress" > mysql;
+RUN echo "CREATE USER IF NOT EXISTS 'hbadr'@'%' IDENTIFIED BY '12345'" > mysql;
+RUN echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'hbadr'@'%'" > mysql;
+RUN echo "FLUSH PRIVILEGES" > mysql;
+RUN echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root12345'" > mysql;
 
 CMD ["mysqld_safe"]
-# CREATE DATABASE IF NOT EXISTS wordpress;
-# CREATE USER IF NOT EXISTS 'crendeha'@'%' IDENTIFIED BY '12345';
-# GRANT ALL PRIVILEGES ON wordpress.* TO 'crendeha'@'%';
-# FLUSH PRIVILEGES;
-# ALTER USER 'root'@'localhost' IDENTIFIED BY 'root12345';
-

@@ -1,10 +1,12 @@
-# FROM dibian:lastest
 FROM debian:buster
 
 
-RUN apt-get update
-RUN apt-get install -y python3
+RUN apt-get update -y && apt-get upgrade -y 
+RUN apt-get -y install wget
 
-COPY test.py .
-CMD ["python3","test.py"]
+RUN apt-get install -y php7.3\
+    php-fpm\
+    php-mysql\
+    mariadb-client
 
+CMD ["nginx", "-g", "daemon off;"]
