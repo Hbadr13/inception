@@ -1,12 +1,7 @@
 FROM debian:buster
 
+RUN apt-get update && apt-get install -y php-fpm wordpress
 
-RUN apt-get update -y && apt-get upgrade -y 
-RUN apt-get -y install wget
+EXPOSE 80
 
-RUN apt-get install -y php7.3\
-    php-fpm\
-    php-mysql\
-    mariadb-client
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["php-fpm"]
