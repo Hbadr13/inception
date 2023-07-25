@@ -1,24 +1,75 @@
-version: '3'
+# version: '3'
+# services:
+#   nginx:
+#     container_name: nginx
+#     build: ./nginx
+#     ports:
+#       - 433:433
+#     env_file:
+#       - .env
+#     depends_on:
+#       - wordpress
+#     restart: always
+#   wordpress:
+#     container_name: wordpress
+#     build: ./wordpress
+#     # ports:
+#     #   - 8081:3036
+#     env_file:
+#       - .env
+#     depends_on:
+#       - mariadb
+#     restart: always
+#   mariadb:
+#     container_name: mariadb
+#     build: ./mariadb
+#     env_file:
+#       - .env
+#     restart: always
 
+# # networks:
+version: '3.8'
+networks:
+  mynetwork:
+    driver: bridge
 services:
-  db:
-    container_name: mariadb
+  nginx:
+    depends_on:
+      - wordpress
+    build: ./nginx
+    image: nginx
+    container_name: nginx
+    ports:
+      - 443:443
+    # volumes:
+    #   - /Users/hbadr/Desktop/data/word:/var/www/html
+    restart:  on-failure
+
+  mariadb:
     build: ./mariadb
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: your_mysql_root_password
-      MYSQL_DATABASE: your_wordpress_database
-      MYSQL_USER: your_wordpress_user
-      MYSQL_PASSWORD: your_wordpress_user_password
-    volumes:
-      - ./mariadb_data:/var/lib/mysql
-  # wordpress:
-  #   image: wordpress
-  #   restart: always
-  #   ports:
-  #     - 8080:80
-  #   environment:
-  #     WORDPRESS_DB_HOST: db
-  #     WORDPRESS_DB_NAME: your_wordpress_database
-  #     WORDPRESS_DB_USER: your_wordpress_user
-  #     WORDPRESS_DB_PASSWORD: your_wordpress_user_password
+    image: mariadb
+    container_name: mariadb
+    # ports:
+    #   - 3306:3306
+    env_file:
+      - .env
+    # volumes:
+    #   - /Users/hbadr/Desktop/data/maria:/var/lib/mysql
+    # networks:
+    #   - mynetwork
+    restart: on-failure
+  wordpress:
+    depends_on:
+      - mariadb
+    build: ./wordpress
+    image: wordpress
+    container_name: wordpress
+    # ports:
+    #   - 9000:9000
+    env_file:
+      - .env
+    # volumes:
+    #   - /Users/hbadr/Desktop/data/word:/var/www/html
+    # networks:
+    #   - mynetwork
+    restart: on-failure

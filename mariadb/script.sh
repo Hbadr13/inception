@@ -1,10 +1,18 @@
-service mysql stop
+#!/bin/bash
 
-fmysql -e  "CREATE DATABASE IF NOT EXISTS wordpress;";
-mysql -e  "CREATE USER IF NOT EXISTS 'hbadr'@'%' IDENTIFIED BY '12345'";
+# service mysql start 
 
-mysql -e  "GRANT ALL PRIVILEGES ON wordpress.* TO 'hbadr'@'%'";
-mysql -e  "FLUSH PRIVILEGES";
-mysql -e  "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root12345'";
+# echo "CREATE DATABASE IF NOT EXISTS wordpres ;" > torun.sql
+# echo "CREATE USER IF NOT EXISTS 'hbadr'@'%' IDENTIFIED BY '12345' ;" >> torun.sql
+# echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'hbadr'@'%' ;" >> torun.sql
+# echo "FLUSH PRIVILEGES;" >> torun.sql
+# mysql < torun.sql
+# service mysql start  && mysql < /tm/file.sql
+# rm torun.sql
 
-mysqld_safe1
+# chmod +x /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i 's/127\.0\.0\.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+# kill $(cat /var/run/mysqld/mysqld.pid)
+mysqld
+
