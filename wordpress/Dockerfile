@@ -7,3 +7,5 @@ RUN chmod +x script.sh
 COPY ./config/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY tools/wp-config.php .
 CMD ["bash","script.sh"]
+
+
