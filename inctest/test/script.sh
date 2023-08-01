@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+
+service mysql start 
+
+
+
+
+mysql -e "CREATE DATABASE IF NOT EXISTS DATABASE_NAME;"
+mysql -e "CREATE USER IF NOT EXISTS 'USER'@'%' IDENTIFIED BY 'USER_PASSWORD'"
+mysql -e "GRANT ALL PRIVILEGES ON DATABASE_NAME.* TO 'USER'@'%' ;"
+mysql -e "FLUSH PRIVILEGES;"
+
+mysqld
