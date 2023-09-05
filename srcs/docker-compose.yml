@@ -53,11 +53,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/hbadr/data/wordpress
+      device: /Users/hbadr/Desktop/hbadr/srcs/data/wordpress
   mariadb:
     driver: local
     name: mariadb
     driver_opts:
       type: none
       o: bind
-      device: /home/hbadr/data/mariadb
+      device: /Users/hbadr/Desktop/hbadr/srcs/data/mariadb
